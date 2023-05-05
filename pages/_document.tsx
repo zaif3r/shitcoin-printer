@@ -5,8 +5,6 @@ import { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/utils/fonts"
 import { cn } from "@/utils/cn"
-import { SiteHeader } from "@/components/layout/SiteHeader"
-import { ThemeProvider } from "@/components/layout/ThemeProvider"
 
 export const metadata: Metadata = {
 	title: {
@@ -33,7 +31,6 @@ export default function Document() {
 				<meta charSet='utf-8' />
 
 				<meta name='description' content={siteConfig.description} />
-				<meta name='viewport' content='width=device-width, initial-scale=1' />
 
 				{/* Favicon */}
 				<link
@@ -67,15 +64,8 @@ export default function Document() {
 					fontSans.variable
 			 	)}
 			>
-				 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-					<div className="relative flex min-h-screen flex-col">
-						<SiteHeader />
-						<div className="flex-1">
-							<Main />
-							<NextScript />	
-						</div>
-					</div>
-				</ThemeProvider>
+				<Main />
+				<NextScript />	
 			</body>
 		</Html>
 	);
