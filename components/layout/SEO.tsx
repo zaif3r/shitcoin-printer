@@ -1,40 +1,35 @@
 import React from 'react';
-import {
-	SITE_DESCRIPTION,
-	SITE_NAME,
-	SITE_URL,
-	SOCIAL_TWITTER,
-} from '@/utils/config';
+import { siteConfig } from '@/config/site'
 import { DefaultSeo } from 'next-seo';
 
 const SEO = () => {
 	const origin =
 		typeof window !== 'undefined' && window.location.origin
 			? window.location.origin
-			: SITE_URL;
+			: siteConfig.url;
 
 	return (
 		<DefaultSeo
-			title={SITE_NAME}
-			defaultTitle={SITE_NAME}
-			titleTemplate={`%s | ${SITE_NAME}`}
-			description={SITE_DESCRIPTION}
+			title={siteConfig.name}
+			defaultTitle={siteConfig.name}
+			titleTemplate={`%s | ${siteConfig.name}`}
+			description={siteConfig.description}
 			defaultOpenGraphImageWidth={1200}
 			defaultOpenGraphImageHeight={630}
 			openGraph={{
 				type: 'website',
-				siteName: SITE_NAME,
+				siteName: siteConfig.name,
 				url: origin,
 				images: [
 					{
 						url: `${origin}/og.png`,
-						alt: `${SITE_NAME} Open Graph Image`,
+						alt: `${siteConfig.name} Open Graph Image`,
 					},
 				],
 			}}
 			twitter={{
-				handle: `@${SOCIAL_TWITTER}`,
-				site: `@${SOCIAL_TWITTER}`,
+				handle: `@${siteConfig.social.twitter}`,
+				site: `@${siteConfig.social.twitter}`,
 				cardType: 'summary_large_image',
 			}}
 		/>
