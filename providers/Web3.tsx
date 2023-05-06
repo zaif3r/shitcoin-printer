@@ -19,7 +19,7 @@ import { publicProvider } from 'wagmi/providers/public';
 
 import { ReactNode } from 'react';
 
-import { ETH_CHAINS, WALLET_CONNECT_PROJECT_ID } from '@/utils/config';
+import { ETH_CHAINS, WALLET_CONNECT_PROJECT_ID } from '@/config/web3';
 import '@rainbow-me/rainbowkit/styles.css';
 
 interface Props {
