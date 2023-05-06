@@ -9,10 +9,12 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@ethersproject/abstract-provider": "^5.7.0",
 		"@rainbow-me/rainbowkit": "^0.12.9",
 		"@types/node": "18.15.13",
 		"@types/react": "18.0.38",
 		"@types/react-dom": "18.0.11",
+		"@wagmi/core": "^0.10.11",
 		"autoprefixer": "10.4.14",
 		"class-variance-authority": "^0.6.0",
 		"clsx": "^1.2.1",
