@@ -1,0 +1,77 @@
+// SPDX-License-Identifier: {{license}}
+pragma solidity ^0.8.13;
+
+import "solady/tokens/ERC20.sol";
+import "solmate/auth/Owned.sol";
+
+{{#if banner}}
+{{banner}}
+
+{{/if}}
+contract {{contractName}} is ERC20, Owned {
+
+    constructor() ERC20() Owned(msg.sender) {{#if preMint}}{
+        _mint(msg.sender, {{preMint}});
+    }{{else}}{}{{/if}}
+
+    function name() public view override returns (string memory) {
+        return "{{name}}";
+    }
+
+    function symbol() public view override returns (string memory) {
+        return "{{symbol}}";
+    }
+
+    function decimals() public view override returns (uint8) {
+        return {{#if decimals}}{{decimals}}{{else}}18{{/if}};
+    }
+
+    {{#if mintable}}
+    function mint(address to, uint256 amount) external onlyOwner {{#if maxSupply}}maxSupplyNotReached {{/if}}{
+        _mint(to, amount);
+    }
+
+    {{/if}}
+    {{#if burnable}}
+    function burn(uint256 amount) external {
+        _burn(msg.sender, amount);
+    }
+
+    {{/if}}
+    {{#if maxSupply}}
+    /*//////////////////////////////////////////////////////////////
+                                MAX SUPPLY
+    //////////////////////////////////////////////////////////////*/
+
+    error MaxSupplyReached();
+
+    uint256 public constant maxSupply = {{maxSupply}};
+
+    modifier maxSupplyNotReached() {
+        if (totalSupply() >= maxSupply) {
+            revert MaxSupplyReached();
+        }
+        
+        _;
+    }
+
+    {{/if}}
+    {{#if blacklist}}
+    /*//////////////////////////////////////////////////////////////
+                                 BLACKLIST
+    //////////////////////////////////////////////////////////////*/
+
+    mapping(address => bool) public blacklisted;
+
+    function setBlacklist(address _address, bool _isBlacklisting) external onlyOwner {
+        blacklisted[_address] = _isBlacklisting;
+    }
+
+    function transfer(address to, uint256 amount) public override returns (bool) {
+        require(!blacklisted[to] && !blacklisted[msg.sender], "BLACKLISTED");
+
+        return super.transfer(to, amount);
+    }
+    
+    {{/if}}
+}
