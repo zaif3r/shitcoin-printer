@@ -6,6 +6,8 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ThemeProvider } from "@/components/layout/ThemeProvider"
 
 import '@/styles/globals.css';
+import '@/styles/prism-theme.css';
+import '@/utils/prism/solidity'
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
