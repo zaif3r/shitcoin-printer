@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import Web3Provider from '@/providers/Web3';
 import { SEO } from '@/components/layout';
 import { SiteHeader } from "@/components/layout/SiteHeader"
+import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ThemeProvider } from "@/components/layout/ThemeProvider"
 
 import '@/styles/globals.css';
@@ -15,6 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
 					<SiteHeader />
 					<div className="flex-1">
 						<Component {...pageProps} />
+					<SiteFooter />
 					</div>
 				</div>
 			</ThemeProvider>
