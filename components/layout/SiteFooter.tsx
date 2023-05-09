@@ -6,7 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 export function SiteFooter() {
     return (
-        <footer className="dui-footer items-center p-4 bg-primary text-primary-foreground">
+        <footer className="dui-footer items-center p-4">
             <div className="items-center grid-flow-col pt-6 md:pt-0">
                 <Icons.logo className="min-w-[1.5rem] h-4 w-4" />
                 <span className="font-semibold inline-block leading-none">
