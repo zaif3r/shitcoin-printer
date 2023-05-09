@@ -85,3 +85,8 @@
 	background: #141414;
 	box-shadow: -20px 20px 43px #121212, 20px -20px 43px #161616;
 }
+
+.dui-mockup-code pre:before {
+    content: "";
+    margin-right: 0;
+}
