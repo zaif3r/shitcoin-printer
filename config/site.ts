@@ -2,8 +2,8 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
     url: "zaifer.xyz",
-    name: "Shitcoin Printer",
-    description: "A simple interface for quickly launching shitcoins.",
+    name: "shitcoin machine",
+    description: "printer go brr",
     mainNav: [
     ],
     links: {
