@@ -12,5 +12,4 @@ export type ERC20TemplateArgs = {
     license?: string;
 };
 
-export type ERC20TemplateResult = { rendered: string };
-
+export type ERC20TemplateResult = { template: string; sourceCode: string };

@@ -1,8 +1,8 @@
-import { ERC20TemplateArgs } from "@/types/templates";
+import type { ERC20TemplateArgs, ERC20TemplateResult } from "@/types/templates";
 
 export async function getERC20Template(
     data: ERC20TemplateArgs
-): Promise<{ rendered: string }> {
+): Promise<ERC20TemplateResult> {
     const response = await fetch("/api/templates/erc20", {
         method: "POST",
         body: JSON.stringify(data),

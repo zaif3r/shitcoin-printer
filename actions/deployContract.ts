@@ -1,7 +1,7 @@
-import type { Abi, Address, Narrow } from "abitype";
+import type { Abi } from "abitype";
 import type { BytesLike, PopulatedTransaction } from "ethers";
 
-import { ConnectorNotFoundError, fetchSigner, type Signer } from "@wagmi/core";
+import { ConnectorNotFoundError, type Signer } from "@wagmi/core";
 
 import { assertActiveChain } from "@/utils/assertActiveChain";
 import { Contract } from "./getContract";
@@ -10,7 +10,7 @@ import { getContractFactory } from "./getContractFactory";
 export type WriteContractMode = "prepared" | "recklesslyUnprepared";
 
 type Request = PopulatedTransaction & {
-    to: Address;
+    to: string;
     gasLimit: NonNullable<PopulatedTransaction["gasLimit"]>;
 };
 
@@ -31,10 +31,11 @@ export type DeployContractPreparedArgs<TAbi extends Abi | readonly unknown[]> = 
     request: Request;
 
     /** Contract ABI */
-    abi: Narrow<TAbi>; // infer `TAbi` type for inline usage
+    abi: TAbi; // infer `TAbi` type for inline usage
     /** Contract bytecode */
     bytecode: BytesLike;
     args: Array<any>;
+    signer?: Signer
 };
 
 export type DeployContractArgs<TAbi extends Abi | readonly unknown[]> =
@@ -42,23 +43,7 @@ export type DeployContractArgs<TAbi extends Abi | readonly unknown[]> =
 
 export type DeployContractResult<TAbi extends Abi> = Contract<TAbi>;
 
-/**
- * @description Function to call a contract write method.
- *
- * It is recommended to pair this with the {@link prepareWriteContract} function
- * to avoid [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
- *
- * @example
- * import { prepareWriteContract, writeContract } from '@wagmi/core'
- *
- * const config = await prepareWriteContract({
- *   address: '0x...',
- *   abi: wagmiAbi,
- *   functionName: 'mint',
- * })
- * const result = await writeContract(config)
- */
-export async function deployContract<TAbi extends Abi, TSigner extends Signer = Signer>(
+export async function deployContract<TAbi extends Abi>(
     config: DeployContractPreparedArgs<TAbi>
 ): Promise<DeployContractResult<TAbi>> {
     /****************************************************************************/
@@ -67,14 +52,13 @@ export async function deployContract<TAbi extends Abi, TSigner extends Signer = 
     /** Ref: https://wagmi.sh/react/prepare-hooks#ios-app-link-constraints */
     /****************************************************************************/
 
-    const signer = await fetchSigner<TSigner>();
-    if (!signer) throw new ConnectorNotFoundError();
-    if (config.chainId) assertActiveChain({ chainId: config.chainId, signer });
+    if (!config.signer) throw new ConnectorNotFoundError();
+    if (config.chainId) assertActiveChain({ chainId: config.chainId, signer: config.signer });
 
     const factory = getContractFactory({
         abi: config.abi, // TODO: Remove cast and still support `Narrow<TAbi>`
         bytecode: config.bytecode,
-        signer,
+        signer: config.signer,
     });
 
     const contract = await factory.deploy(config.args);

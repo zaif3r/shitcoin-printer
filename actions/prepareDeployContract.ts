@@ -1,4 +1,4 @@
-import type { Abi, Narrow } from "abitype";
+import type { Abi } from "abitype";
 import type { BytesLike, PopulatedTransaction } from "ethers";
 
 import { ConnectorNotFoundError, fetchSigner, type Signer } from "@wagmi/core";
@@ -25,7 +25,7 @@ export type PrepareDeployContractResult<
     TAbi extends Abi | readonly unknown[] = Abi,
     TChainId extends number = number
 > = {
-    abi: Narrow<TAbi>;
+    abi: TAbi;
     bytecode: BytesLike;
     chainId?: TChainId;
     mode: "prepared";
