@@ -8,7 +8,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 const InputWithLabel = React.forwardRef<
     React.ElementRef<typeof Label>,
     React.ComponentPropsWithoutRef<typeof Label>
->(({ className, children, title, ...props }) => {
+>(({ className, children, title, ...props }, ref) => {
     return (
         <div className={cn("grid w-full items-center gap-1.5", className)}>
             <Label {...props}>{title}</Label>
